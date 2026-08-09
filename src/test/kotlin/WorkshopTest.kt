@@ -1,3 +1,4 @@
+package org.example
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
