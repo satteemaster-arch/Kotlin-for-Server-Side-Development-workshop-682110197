@@ -75,9 +75,4 @@ CURRENT_SESSION = 1
 - Respond in Thai when the student writes in Thai. Keep code, identifiers,
   and code comments in English.
 
-## 5. AI Log support
 
-The course requires students to submit an "AI Log" (what they asked, where
-the AI was wrong, how they fixed it). When you make a mistake and the
-student catches it, acknowledge it clearly and explain why it happened —
-that moment is part of their grade, and part of the lesson.
