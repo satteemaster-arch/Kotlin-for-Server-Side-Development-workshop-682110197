@@ -1,6 +1,9 @@
 package org.example
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class WorkshopTest {
 
@@ -42,16 +45,16 @@ class WorkshopTest {
 
 
     // --- Tests for Workshop #2: Data Analysis Pipeline ---
-    
+
     @Test
     fun `test calculateTotalElectronicsPriceOver500`() {
         // Arrange
         val products = listOf(
-            Product("Laptop", 1200.0, "Electronics"), 
+            Product("Laptop", 1200.0, "Electronics"),
             Product("Smartwatch", 500.0, "Electronics"), // 🚨 Edge case: 500 พอดี (ไม่ควรถูกนำมาบวก เพราะเงื่อนไขคือ > 500)
-            Product("Mouse", 300.0, "Electronics"),   
-            Product("Smartphone", 800.0, "Electronics"), 
-            Product("Desk", 1000.0, "Furniture")      
+            Product("Mouse", 300.0, "Electronics"),
+            Product("Smartphone", 800.0, "Electronics"),
+            Product("Desk", 1000.0, "Furniture")
         )
         // ผลรวมที่คาดหวังคือ 1200.0 + 800.0 = 2000.0
         val expectedTotal = 2000.0
@@ -67,11 +70,11 @@ class WorkshopTest {
     fun `test countElectronicsOver500`() {
         // Arrange
         val products = listOf(
-            Product("Laptop", 1200.0, "Electronics"), 
+            Product("Laptop", 1200.0, "Electronics"),
             Product("Smartwatch", 500.0, "Electronics"), // 🚨 Edge case: 500 พอดี (ไม่ควรถูกนับ)
-            Product("Mouse", 300.0, "Electronics"),   
-            Product("Smartphone", 800.0, "Electronics"), 
-            Product("Desk", 1000.0, "Furniture")      
+            Product("Mouse", 300.0, "Electronics"),
+            Product("Smartphone", 800.0, "Electronics"),
+            Product("Desk", 1000.0, "Furniture")
         )
         // จำนวนที่คาดหวังคือ 2 ชิ้น (Laptop และ Smartphone)
         val expectedCount = 2
@@ -84,4 +87,55 @@ class WorkshopTest {
     }
 
     // --- Tests for Workshop #2: Data Analysis Pipeline End ---
+
+    // --- Tests for Workshop #3: Citizen ID Validator ---
+
+    @Test
+    fun `valid id returns true`() {
+        // Arrange
+        val id = "3509900547250"
+
+        // Act
+        val result = validateCitizenId(id)
+
+        // Assert
+        assertTrue(result, "a well-formed 13-digit id should be accepted")
+    }
+
+    @Test
+    fun `id with wrong length returns false`() {
+        // Arrange
+        val tooShort = "350990054725"    // 12 digits
+        val tooLong = "35099005472500"   // 14 digits
+
+        // Act & Assert
+        assertFalse(validateCitizenId(tooShort), "12 digits is too short")
+        assertFalse(validateCitizenId(tooLong), "14 digits is too long")
+    }
+
+    @Test
+    fun `id with letters returns false`() {
+        // Arrange
+        val id = "12345678901AB"  // exactly 13 chars, but two of them are letters
+
+        // Act
+        val result = validateCitizenId(id)
+
+        // Assert
+        assertFalse(result, "an id containing letters should be rejected")
+    }
+
+    @Test
+    fun `id with wrong checksum returns false`() {
+        // หลักที่ 13 ต้องเป็น check digit ที่คำนวณจาก 12 หลักแรก
+        // 110170018520 → check digit ที่ถูกต้องคือ 6
+        assertFalse(validateCitizenId("1101700185207")) // หลักสุดท้ายผิด
+        assertFalse(validateCitizenId("1234567890129")) // ที่ถูกคือ ...1
+
+        // ใบที่ checksum ถูกต้อง ต้องยังผ่านอยู่
+        assertTrue(validateCitizenId("3509900547250"))
+        assertTrue(validateCitizenId("1234567890121"))
+    }
+
+    // --- Tests for Workshop #3: Citizen ID Validator End ---
 }
