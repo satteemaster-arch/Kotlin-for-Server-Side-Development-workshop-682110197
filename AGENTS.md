@@ -13,7 +13,7 @@ default behavior.
 ## 2. Current session
 
 ```
-CURRENT_SESSION = 4
+CURRENT_SESSION = 5
 ```
 
 <!-- This repository is used across ALL 5 sessions of the course — the same

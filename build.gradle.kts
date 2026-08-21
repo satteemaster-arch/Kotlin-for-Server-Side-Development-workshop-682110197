@@ -12,10 +12,19 @@ repositories {
 }
 
 dependencies {
+    // Ktor server
     implementation("io.ktor:ktor-server-core:3.5.2")
     implementation("io.ktor:ktor-server-netty:3.5.2")
     implementation("io.ktor:ktor-server-content-negotiation:3.5.2")
+    implementation("io.ktor:ktor-server-status-pages:3.5.2")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.5.2")
+
+    // Persistence
+    implementation("org.jetbrains.exposed:exposed-core:1.4.0")
+    implementation("org.jetbrains.exposed:exposed-jdbc:1.4.0")
+    implementation("com.h2database:h2:2.4.240")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
+
     implementation("ch.qos.logback:logback-classic:1.5.18")
 
     testImplementation(kotlin("test"))
@@ -32,5 +41,5 @@ kotlin {
 }
 
 application {
-    mainClass.set("org.example.Workshop4Kt")
+    mainClass.set("org.example.project.AppKt")
 }
